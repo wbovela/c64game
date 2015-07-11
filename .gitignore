@@ -41,3 +41,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+<<<<<<< HEAD
+=======
+
+*.sym
+*.prg
+>>>>>>> cece9ec5bdfa7cf5ec19758c78af6bbf8c5c7f87
