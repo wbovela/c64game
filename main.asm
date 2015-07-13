@@ -1,7 +1,7 @@
-//--------------------------------------------------
-// Generate to a .prg file
-//--------------------------------------------------
-//GenerateTo "multiplex.prg"", d64, progdisk
+// C64 game code - routines for games on the C64
+// Author: Wouter Bovelander
+// Date: 2015
+// Environment: KickAssembler 3.40
 
 //--------------------------------------------------
 // Include constants
@@ -23,17 +23,12 @@
 //--------------------------------------------------
 // Main program with Basic starter
 //--------------------------------------------------
-.pc= $0800
-		.byte	$00,$0c,$08,$0a,$00,$9e,$32,$30,$36,$34,$00,$00,$00,$00
-
+.pc= $0801
+:BasicUpstart(start)		
 .pc= $0810
-		jmp	start
-
-.import source "game_code.asm"
-
 start:		jsr 	init	
 		lda 	#0				// select screen number
-		//jsr	print_welcome
+		jsr	print_welcome
 		jsr 	draw_screen
 		jsr 	set_interrupt
 		jmp 	*				// infinite loop
@@ -112,7 +107,9 @@ irq: 		jsr 	animate		// move along the x axis
 		sta 	curr	
 end: 		jmp 	$ea81
 
-
-
+//--------------------------------------------------
+//  Import the rest of the code
+//--------------------------------------------------
+.import source "game_code.asm"
 
 

@@ -11,7 +11,7 @@
 </project>
 
 <workspace version="Crimson Editor 3.60">
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\main.asm" linenum="34" placement="2:3:-1:-1:-8:-30:25:25:1049:643" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\main.asm" linenum="28" placement="2:3:-1:-1:-8:-30:25:25:1049:643" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\charset2.asm" linenum="3" placement="0:1:-1:-1:-8:-30:50:50:1074:668" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\cia.asm" linenum="3" placement="0:1:-1:-1:-8:-30:75:75:1099:693" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\game_code.asm" linenum="69" placement="0:1:-1:-1:-8:-30:100:100:1124:718" />
