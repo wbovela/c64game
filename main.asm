@@ -28,7 +28,7 @@
 .pc= $0810 "Main Program"
 start:		jsr 	init	
 		lda 	#0				// select screen number
-		jsr	print_welcome
+		//jsr	print_welcome
 		jsr 	draw_screen
 		jsr 	set_interrupt
 		jmp 	*				// infinite loop
