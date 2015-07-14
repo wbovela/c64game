@@ -12,13 +12,9 @@
 </project>
 
 <workspace version="Crimson Editor 3.60">
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\main.asm" linenum="4" placement="0:1:-1:-1:-8:-30:25:25:1049:643" />
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\charset2.asm" linenum="3" placement="0:1:-1:-1:-8:-30:50:50:1074:668" />
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\cia.asm" linenum="3" placement="0:1:-1:-1:-8:-30:75:75:1099:693" />
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\game_code.asm" linenum="69" placement="0:1:-1:-1:-8:-30:100:100:1124:718" />
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\screens.asm" linenum="1" placement="0:1:-1:-1:-8:-30:125:125:1149:743" />
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\sprite_data.asm" linenum="4" placement="0:1:-1:-1:-8:-30:150:150:1174:768" />
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\vic2constants.asm" linenum="19" placement="0:1:-1:-1:-8:-30:175:175:1199:793" />
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\charset.asm" linenum="3" placement="2:3:-1:-1:-8:-30:225:225:1249:843" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\main.asm" linenum="15" placement="0:1:-1:-1:-8:-30:225:225:1720:712" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\game_code.asm" linenum="101" placement="0:1:-1:-1:-8:-30:0:0:1499:491" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\screens.asm" linenum="37" placement="2:3:-1:-1:-8:-30:25:25:1524:516" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\charset2.asm" linenum="20" placement="0:1:-1:-1:-8:-30:50:50:1549:541" />
 </workspace>
 

@@ -6,7 +6,6 @@
 // - Data MUST be in hex format (each value preceded by a '$' sign)
 // - There CANNOT be any spaces in the data itself (so $20,$AB,$20,$FF is the only correct way)
 // - There may be characters and whitespace before and after the data (like comments or BYTE or WORD or .BYTE or whatever)
-// - There MUST BE exactly 40 data values per line (I know it's lame)
 // So if your data looks like this it'll work:
 // 	BYTE	$66,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$13,$14,$01,$19,$20,$01,$20,$17,$08,$09,$0C,$05,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$66 // comment
 //	BYTE	$66,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$20,$66
@@ -80,20 +79,8 @@ class RLEPack {
 	private function input($p_sFileName) {
 		$sFileContents = file_get_contents($p_sFileName);
 		// split the contents by whitespaces
-		$aResult = preg_split('/\s+/', $sFileContents);
-		//echo 'input: '.print_r($sFileContents,true).PHP_EOL;
-		//preg_match('/(\$.*?) /s', $sFileContents, $aResult);
-		//echo 'output: '.print_r($aResult,true).PHP_EOL;
-
-		// check each line for number of $ signs
-		foreach ($aResult as $iKey => $sString) {
-			// if it's not hex values then drop them
-			$iCount = substr_count($sString, '$');
-			if ($iCount <> 40) {
-				unset($aResult[$iKey]);
-			}			
-		}
-		return $aResult;
+		preg_match_all('/\$[\dA-Fa-f,\$]+/', $sFileContents, $aResult);
+		return $aResult[0];
 	}
 
 	//
@@ -105,16 +92,17 @@ class RLEPack {
 		foreach ($p_aRLE as $aElement) {
 			$iQty = $aElement['qty'];
 			$iVal = $aElement['val'];
-			echo $iQty.','.$iVal;
+			echo '$'.dechex((float)$iQty).','.$iVal;
 			$iElements++;
 			if ($iElements === self::ELEMENTS_PER_LINE) {
 				$iElements=0;
 				echo PHP_EOL."\t".self::BYTE_STRING."\t";
 			} else {
 				echo ',';
-			}
-			
+			}			
 		}
+		// this ends the string
+		echo '$00,$00';
 	}
 
 	//
