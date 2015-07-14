@@ -1,4 +1,6 @@
-.pc=$2000
+.pc= $2000 "character set"
+.import c64 "c64charset.prg"
+/*
 charset:
         .byte    $3c,$66,$6e,$6e,$60,$62,$3c,$00 // character 0
         .byte    $18,$3c,$66,$7e,$66,$66,$66,$00 // character 1
@@ -256,3 +258,4 @@ charset:
         .byte    $e7,$e7,$e7,$07,$07,$ff,$ff,$ff // character 253
         .byte    $0f,$0f,$0f,$0f,$ff,$ff,$ff,$ff // character 254
         .byte    $0f,$0f,$0f,$0f,$f0,$f0,$f0,$f0 // character 255
+*/

@@ -23,9 +23,9 @@
 //--------------------------------------------------
 // Main program with Basic starter
 //--------------------------------------------------
-.pc= $0801
+.pc= $0801 "Basic startup"
 :BasicUpstart(start)		
-.pc= $0810
+.pc= $0810 "Main Program"
 start:		jsr 	init	
 		lda 	#0				// select screen number
 		jsr	print_welcome
