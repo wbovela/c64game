@@ -79,7 +79,8 @@ class RLEPack {
 	private function input($p_sFileName) {
 		$sFileContents = file_get_contents($p_sFileName);
 		// split the contents by whitespaces
-		preg_match_all('/\$[\dA-Fa-f,\$]+/', $sFileContents, $aResult);
+		//preg_match_all('/\$[\dA-Fa-f,\$]+/', $sFileContents, $aResult);
+		preg_match_all('/(\$[0-9A-Fa-f]{2}(?:,\$[0-9A-Fa-f]{2})+)/', $sFileContents, $aResult);
 		return $aResult[0];
 	}
 
