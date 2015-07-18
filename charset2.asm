@@ -1,5 +1,6 @@
 //scrapwriter charset
 .pc= $2000 "character set"
+//.import	c64 "c64charset.prg"
 
         .byte    $20,$3e,$41,$5d,$51,$5d,$41,$3e // character 0
         .byte    $00,$3f,$21,$21,$7f,$61,$61,$61 // character 1

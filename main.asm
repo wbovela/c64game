@@ -26,7 +26,8 @@
 .pc= $0801 "Basic startup"
 :BasicUpstart(start)		
 .pc= $0810 "Main Program"
-start:		jsr 	init	
+start:		
+		jsr 	init	
 		lda 	#0				// select screen number
 		//jsr	print_welcome
 		jsr 	draw_screen
@@ -83,8 +84,9 @@ set_interrupt:
 		rts
 
 //--------------------------------------------------
-int: 
 
+int: 		
+		lda 	INTERRUPT_EVENT
 		lda	#%10000000	// check that the raster line's 8th bit
 		bit	$d011		// is zero
 		bne	!cnt+		// if not, continue
@@ -103,6 +105,7 @@ int:
 		sta 	INTERRUPT_EVENT// has the raster interrupt happened?
 		bne 	irq 	
 		jmp 	$ea81	
+
 //--------------------------------------------------
 irq:
  		jsr 	animate		// move along the x axis
