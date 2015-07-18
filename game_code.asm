@@ -98,7 +98,7 @@ print_welcome:
 !loop:		lda	welcome,x
 		cmp 	#$ff	
 		beq 	ex_loop 
-		sta 	$0400,x	
+		sta 	$05ef,x	
 		inx
 		jmp 	!loop-	
 ex_loop:	rts
