@@ -62,7 +62,7 @@ init:
 set_interrupt:
 		sei
 		ldy 	#$7f				// $7f = %01111111
-		sty 	CIA1				// Turn off CIA 1  Timer interrupts
+		//sty 	CIA1				// Turn off CIA 1  Timer interrupts
 		sty 	CIA2				// Turn off CIA 2  Timer interrupts
 		lda 	CIA1				// cancel all CIA-IRQs in queue/unprocessed
 		lda 	CIA2				// cancel all CIA-IRQs in queue/unprocessed
