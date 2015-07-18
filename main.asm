@@ -26,7 +26,8 @@
 .pc= $0801 "Basic startup"
 :BasicUpstart(start)		
 .pc= $0810 "Main Program"
-start:		jsr 	init	
+start:		
+		jsr 	init	
 		lda 	#0				// select screen number
 		//jsr	print_welcome
 		jsr 	draw_screen
@@ -83,13 +84,15 @@ set_interrupt:
 		rts
 
 //--------------------------------------------------
-int: 		lda 	INTERRUPT_EVENT
+int: 		
+		lda 	INTERRUPT_EVENT
 		and 	#$01	
 		sta 	INTERRUPT_EVENT// has the raster interrupt happened?
 		bne 	irq 	
 		jmp 	$ea81	
 //--------------------------------------------------
-irq: 		jsr 	animate		// move along the x axis
+irq: 		
+		jsr 	animate		// move along the x axis
 		ldx 	curr		// load table index
 		lda 	tb_ypos,x	// get y position raster position
 		sta 	SPRITE_0_Y	// set y position
