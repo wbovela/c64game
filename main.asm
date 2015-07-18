@@ -73,23 +73,39 @@ set_interrupt:
 		lda 	#75 				// set rasterline to where the
 		sta 	RASTER_LINE			// interrupt should occur
 		lda 	#01 				// bit 0 is raster interrupt
-		sta 	INTERRUPT_ENABLE	// request a raster interrupt from vic2
-		lda 	RASTER_LINE_MSB		// Bit#7 of $d011 is basically...
+		sta 	INTERRUPT_ENABLE		// request a raster interrupt from vic2
+		lda 	RASTER_LINE_MSB			// Bit#7 of $d011 is basically...
 		and 	#$7f				// ...the 9th Bit for $d012
-		sta 	RASTER_LINE_MSB		// we need to make sure it is set to zero
+		sta 	RASTER_LINE_MSB			// we need to make sure it is set to zero
 		lda 	#0		
 		sta 	curr				// set table pointer to 0
 		cli
 		rts
 
 //--------------------------------------------------
-int: 		lda 	INTERRUPT_EVENT
+int: 
+
+		lda	#%10000000	// check that the raster line's 8th bit
+		bit	$d011		// is zero
+		bne	!cnt+		// if not, continue
+
+		lda	RASTER_LINE	// get the current raster line
+		cmp	#$4c		// compare to 122 (raster_line - value)
+		bcc	!col1+		// raster is below? (acc < value?) jump to col1 
+		lda	#$00		// set col $00
+		jmp	!border+	// set border color
+!col1:		lda	#$0f		// set col $0f (acc < value)
+!border:	sta	$d020		// set border color
+		sta	$d021
+				
+!cnt:		lda 	INTERRUPT_EVENT
 		and 	#$01	
 		sta 	INTERRUPT_EVENT// has the raster interrupt happened?
 		bne 	irq 	
 		jmp 	$ea81	
 //--------------------------------------------------
-irq: 		jsr 	animate		// move along the x axis
+irq:
+ 		jsr 	animate		// move along the x axis
 		ldx 	curr		// load table index
 		lda 	tb_ypos,x	// get y position raster position
 		sta 	SPRITE_0_Y	// set y position
