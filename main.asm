@@ -84,7 +84,10 @@ set_interrupt:
 		rts
 
 //--------------------------------------------------
-
+// The interrupt handling routine.
+// With the CIA1 timer interrupts turned on this
+// is called 50 times each second.
+//--------------------------------------------------
 int: 		
 		lda 	INTERRUPT_EVENT
 		lda	#%10000000	// check that the raster line's 8th bit
@@ -100,15 +103,17 @@ int:
 !border:	sta	$d020		// set border color
 		sta	$d021
 				
-!cnt:		lda 	INTERRUPT_EVENT
-		and 	#$01	
-		sta 	INTERRUPT_EVENT// has the raster interrupt happened?
-		bne 	irq 	
-		jmp 	$ea81	
+!cnt:		lda 	INTERRUPT_EVENT	// check which interrupts happened
+		and 	#$01		// bit #0 is the raster interrupt
+		sta 	INTERRUPT_EVENT	// acknowledge the interrupt to the VIC-2
+		bne 	irq 		// if it happened, then handle the animation
+		jmp 	$ea81		// otherwise, just give control back to the system
 
 //--------------------------------------------------
+// When the raster interrupt fired we do some sprite stuff
+//--------------------------------------------------
 irq:
- 		jsr 	animate		// move along the x axis
+ 		jsr 	animate		// move the sprite along the x axis
 		ldx 	curr		// load table index
 		lda 	tb_ypos,x	// get y position raster position
 		sta 	SPRITE_0_Y	// set y position
@@ -119,12 +124,12 @@ irq:
 		lda 	tb_col,x	// get next color
 		sta 	SPRITE_SOLID_ALL_2
 		inc 	curr		// increase cursor
-		lda 	curr	
-		cmp 	#4		
-		bne 	end 	
-		lda 	#0		
-		sta 	curr	
-end: 		jmp 	$ea81
+		lda 	curr		// load it in
+		cmp 	#4		// are we at the end of the table?
+		bne 	end 		// no, then end
+		lda 	#0		// yes, then load 0 to reset the cursor
+		sta 	curr		// and save it
+end: 		jmp 	$ea81		// return to the system
 
 //--------------------------------------------------
 //  Import the rest of the code
