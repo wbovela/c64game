@@ -65,13 +65,13 @@ set_interrupt:
 		ldy 	#$7f				// $7f = %01111111
 		//sty 	CIA1				// Turn off CIA 1  Timer interrupts
 		sty 	CIA2				// Turn off CIA 2  Timer interrupts
-		lda 	CIA1				// cancel all CIA-IRQs in queue/unprocessed
+		//lda 	CIA1				// cancel all CIA-IRQs in queue/unprocessed
 		lda 	CIA2				// cancel all CIA-IRQs in queue/unprocessed
 		lda 	#<int	
 		sta 	$0314	
 		lda 	#>int	
 		sta 	$0315				// setup the vector for our own irq
-		lda 	#75 				// set rasterline to where the
+		lda 	#$3a 				// set rasterline to where the
 		sta 	RASTER_LINE			// interrupt should occur
 		lda 	#01 				// bit 0 is raster interrupt
 		sta 	INTERRUPT_ENABLE		// request a raster interrupt from vic2
@@ -89,13 +89,12 @@ set_interrupt:
 // is called 50 times each second.
 //--------------------------------------------------
 int: 		
-		lda 	INTERRUPT_EVENT
-		lda	#%10000000	// check that the raster line's 8th bit
-		bit	$d011		// is zero
+		lda	$d011
+		and	#%10000000
 		bne	!cnt+		// if not, continue
 
 		lda	RASTER_LINE	// get the current raster line
-		cmp	#$4c		// compare to 122 (raster_line - value)
+		cmp	#$3c		// compare to 3c (raster_line - value)
 		bcc	!col1+		// raster is below? (acc < value?) jump to col1 
 		lda	#$00		// set col $00
 		jmp	!border+	// set border color
@@ -107,12 +106,26 @@ int:
 		and 	#$01		// bit #0 is the raster interrupt
 		sta 	INTERRUPT_EVENT	// acknowledge the interrupt to the VIC-2
 		bne 	irq 		// if it happened, then handle the animation
-		jmp 	$ea81		// otherwise, just give control back to the system
+		
+		pla
+		tay
+		pla
+		tax
+		pla
+		rti
+		//jmp 	$ea31		// otherwise, just give control back to the system
 
 //--------------------------------------------------
 // When the raster interrupt fired we do some sprite stuff
 //--------------------------------------------------
-irq:
+irq:		
+		pla
+		tay
+		pla
+		tax
+		pla
+		rti
+		
  		jsr 	animate		// move the sprite along the x axis
 		ldx 	curr		// load table index
 		lda 	tb_ypos,x	// get y position raster position
