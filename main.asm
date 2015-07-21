@@ -89,43 +89,35 @@ set_interrupt:
 // is called 50 times each second.
 //--------------------------------------------------
 int: 		
-		lda	$d011
-		and	#%10000000
-		bne	!cnt+		// if not, continue
+		lda	$d011		// check the most significat bit of the
+		and	#%10000000	// raster line.
+		bne	!cnt+		// if it's set, continue
 
-		lda	RASTER_LINE	// get the current raster line
+		lda	$d012		// get the current raster line
 		cmp	#$3c		// compare to 3c (raster_line - value)
 		bcc	!col1+		// raster is below? (acc < value?) jump to col1 
 		lda	#$00		// set col $00
 		jmp	!border+	// set border color
 !col1:		lda	#$0f		// set col $0f (acc < value)
 !border:	sta	$d020		// set border color
-		sta	$d021
+		sta	$d021		// and screen color
 				
-!cnt:		lda 	INTERRUPT_EVENT	// check which interrupts happened
+!cnt:		lda 	$d019		// check which interrupts happened
 		and 	#$01		// bit #0 is the raster interrupt
-		sta 	INTERRUPT_EVENT	// acknowledge the interrupt to the VIC-2
+		sta 	$d019		// acknowledge the interrupt to the VIC-2
 		bne 	irq 		// if it happened, then handle the animation
 		
-		pla
+		pla			// return from interrupt
 		tay
 		pla
 		tax
 		pla
 		rti
-		//jmp 	$ea31		// otherwise, just give control back to the system
 
 //--------------------------------------------------
 // When the raster interrupt fired we do some sprite stuff
 //--------------------------------------------------
-irq:		
-		pla
-		tay
-		pla
-		tax
-		pla
-		rti
-		
+irq:				
  		jsr 	animate		// move the sprite along the x axis
 		ldx 	curr		// load table index
 		lda 	tb_ypos,x	// get y position raster position
@@ -133,7 +125,7 @@ irq:
 		lda 	tb_shp,x	// get next sprite pointer
 		sta 	$07f8		// store $0a00 = $28*#64
 		lda 	tb_rst,x	// get next raster line
-		sta 	RASTER_LINE
+		sta 	$d012
 		lda 	tb_col,x	// get next color
 		sta 	SPRITE_SOLID_ALL_2
 		inc 	curr		// increase cursor
@@ -142,7 +134,13 @@ irq:
 		bne 	end 		// no, then end
 		lda 	#0		// yes, then load 0 to reset the cursor
 		sta 	curr		// and save it
-end: 		jmp 	$ea81		// return to the system
+
+end: 		pla
+		tay
+		pla
+		tax
+		pla
+		rti
 
 //--------------------------------------------------
 //  Import the rest of the code
