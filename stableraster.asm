@@ -24,8 +24,8 @@ checkirq:
 	beq skipinit
 irqinit:
 	sei
-	sta oldirq+1	// store the old IRQ vector
-	stx oldirq+2
+	sta oldirq	// store the old IRQ vector
+	stx oldirq+1
 	lda #<irq1
 	ldx #>irq1
 	sta cinv	// set the new interrupt vector
@@ -71,9 +71,9 @@ deinstall:
 	sta $dc0d     // enable Timer A interrupts on CIA 1
 	lda #0
 	sta $d01a     // disable video interrupts
-	lda oldirq+1
+	lda oldirq
 	sta cinv      // restore old IRQ vector
-	lda oldirq+2
+	lda oldirq+1
 	sta cinv+1
 	bit $dd0d     // re-enable NMI interrupts
 	cli
@@ -116,8 +116,8 @@ irq1:
 	nop
 	nop
 	nop
-oldirq:	jmp *         // Return to the original interrupt
-
+loldirq:	jmp *         // Return to the original interrupt
+.label	oldirq = loldirq + 1
 	
 // Main raster interrupt
 irq2:
