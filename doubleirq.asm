@@ -44,35 +44,31 @@ main:
  
 //===========================================================================================
 // Main interrupt handler
+// [x] denotes the number of cycles 
 //=========================================================================================== 
 irq1:
-         sta reseta1	//Preserve A,X and Y
-         stx resetx1	//Registers
-         sty resety1	//using self modifying code
+			//The CPU cycles spent to get in here		[7]
+         sta reseta1	//Preserve A,X and Y				[4]
+         stx resetx1	//Registers					[4]
+         sty resety1	//using self modifying code			[4]
  
-         lda #<irq2	//Set IRQ Vector
-         ldx #>irq2	//to point to the
-			//next part of the
-         sta $fffe	//Stable IRQ
-         stx $ffff   
-         inc $d012	//set raster interrupt to the next line
-         asl $d019	//Ack raster interrupt
-         tsx		//Store the stack pointer! It points to the
-         cli		//return information of irq1.
-         nop
-         nop
-         nop
-         nop
-         nop		//Execute nop's
-         nop		//until next RASTER
-         nop		//IRQ Triggers
-         nop
-         nop		//2 cycles per
-         nop		//instruction so
-         nop		//we will be within
-         nop		//1 cycle of RASTER
-         nop		//Register change
-         nop
+         lda #<irq2	//Set IRQ Vector				[4]
+         ldx #>irq2	//to point to the				[4]
+			//next part of the	
+         sta $fffe	//Stable IRQ					[4]
+         stx $ffff   	//						[4]
+         inc $d012	//set raster interrupt to the next line		[6]
+         asl $d019	//Ack raster interrupt				[6]
+         tsx		//Store the stack pointer! It points to the	[2]
+         cli		//return information of irq1.			[2]
+         		//Total spent cycles up to this point		[51]
+         nop		//						[53]
+         nop		//						[55]
+         nop		//						[57]
+         nop		//						[59]
+         nop		//Execute nop's					[61]
+         nop		//until next RASTER				[63]
+         nop		//IRQ Triggers					
 
 //===========================================================================================
 // Part 2 of the Main interrupt handler
@@ -80,10 +76,10 @@ irq1:
 irq2:
          txs		//Restore stack pointer to point the the return
 			//information of irq1, being our endless loop.
-
+	
          ldx #$09	//Wait exactly 9 * (2+3) cycles so that the raster line
-         dex		//is in the border
-         bne *-1	
+         dex		//is in the border				[2]
+         bne *-1							[3]
  
          lda #$00	//Set the screen and border colors
          ldx #$05
@@ -115,17 +111,17 @@ lab_y1:	ldy #$00
 irq3:
          sta reseta2	//Preserve A,X,and Y
          stx resetx2	//Registers
-         sty resety2
+         sty resety2         
 
+         ldy #$13	//Waste time so this
+         dey		//IRQ does not try	[2]
+         bne *-1	//to reoccur on the	[3]
+			//same line!
+         
          lda #$0f	//More colors
          ldx #$07 
          sta $d020	//Cool! subsequent
          stx $d021	//IRQ's are also
- 
-         ldy #$13	//Waste time so this
-         dey		//IRQ does not try
-         bne *-1	//to reoccur on the
-			//same line!
  
          lda #<irq1	//Reset Vectors to
          ldx #>irq1	//first IRQ again
