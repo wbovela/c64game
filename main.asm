@@ -72,12 +72,12 @@ set_interrupt:
 		lda 	#>int	
 		sta 	$0315				// setup the vector for our own irq
 		lda 	#$3a 				// set rasterline to where the
-		sta 	RASTER_LINE			// interrupt should occur
+		sta 	$d012			// interrupt should occur
 		lda 	#01 				// bit 0 is raster interrupt
-		sta 	INTERRUPT_ENABLE		// request a raster interrupt from vic2
-		lda 	RASTER_LINE_MSB			// Bit#7 of $d011 is basically...
+		sta 	$d01a		// request a raster interrupt from vic2
+		lda 	$d011			// Bit#7 of $d011 is basically...
 		and 	#$7f				// ...the 9th Bit for $d012
-		sta 	RASTER_LINE_MSB			// we need to make sure it is set to zero
+		sta 	$d011			// we need to make sure it is set to zero
 		lda 	#0		
 		sta 	curr				// set table pointer to 0
 		cli
