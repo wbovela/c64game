@@ -79,7 +79,7 @@ irq2:
 	
          ldx #$09	//Wait exactly 9 * (2+3) cycles so that the raster line
          dex		//is in the border				[2]
-         bne *-1							[3]
+         bne *-1	//						[3]
  
          lda #$00	//Set the screen and border colors
          ldx #$05
