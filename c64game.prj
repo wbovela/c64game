@@ -12,11 +12,15 @@
 </project>
 
 <workspace version="Crimson Editor 3.60">
-	<localfile path="C:\C64-Kickass-IDE\projects\c64game\main.asm" linenum="151" placement="2:3:-1:-1:-8:-30:225:225:1720:712" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\main.asm" linenum="39" placement="2:3:-1:-1:-8:-30:225:225:1720:712" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\game_code.asm" linenum="101" placement="0:1:-1:-1:-8:-30:0:0:1499:491" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\screens.asm" linenum="37" placement="0:1:-1:-1:-8:-30:25:25:1524:516" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\charset2.asm" linenum="224" placement="0:1:-1:-1:-8:-30:50:50:1549:541" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\main.sym" linenum="1" placement="0:1:-1:-1:-8:-30:225:225:1724:716" />
 	<localfile path="C:\C64-Kickass-IDE\projects\c64game\vic2constants.asm" linenum="73" placement="0:1:-1:-1:-8:-30:175:175:1599:832" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\stableraster.asm" linenum="84" placement="0:1:-1:-1:-8:-30:25:25:1449:682" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\doubleirq.asm" linenum="7" placement="0:1:-1:-1:-8:-30:50:50:1474:707" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\sideborders.asm" linenum="27" placement="0:1:-1:-1:-8:-30:225:225:1724:716" />
+	<localfile path="C:\C64-Kickass-IDE\projects\c64game\advanced.asm" linenum="8" placement="0:1:-1:-1:-8:-30:0:0:1499:491" />
 </workspace>
 
